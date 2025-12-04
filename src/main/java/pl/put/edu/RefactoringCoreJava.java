@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-
+//Tomek to pisał, na pewno jest dobrze
 public class RefactoringCoreJava {
 
     public static void main(String[] args) throws InterruptedException {
@@ -20,20 +20,20 @@ public class RefactoringCoreJava {
         library.addBook(new Book("978-1491950357", "Designing Data-Intensive Applications", "Martin Kleppmann", 2017));
         library.addBook(new Book("978-0262033848", "Introduction to Algorithms", "Cormen, Leiserson, Rivest, Stein", 2009));
 
-        Member m1 = library.registerMember("Alice");
-        Member m2 = library.registerMember("Bob");
+        Member firstMember = library.registerMember("Alice");
+        Member secondMember = library.registerMember("Bob");
 
         System.out.println("== Initial Library State ==");
         System.out.println(library);
 
-        library.checkout(m1.getId(), "978-0134685991");
+        library.checkout(firstMember.getId(), "978-0134685991");
         Thread.sleep(10);
-        library.checkout(m2.getId(), "978-0201633610");
+        library.checkout(secondMember.getId(), "978-0201633610");
 
         System.out.println("\n== After Two Checkouts ==");
         System.out.println(library);
 
-        Optional<Loan> maybeLoan = library.findLoan(m1.getId(), "978-0134685991");
+        Optional<Loan> maybeLoan = library.findLoan(firstMember.getId(), "978-0134685991");
         if (maybeLoan.isPresent()) {
             Loan loan = maybeLoan.get();
             loan.setLoanDate(LocalDate.now().minusDays(40));
@@ -44,11 +44,11 @@ public class RefactoringCoreJava {
             System.out.println(l);
         }
 
-        library.returnBook(m1.getId(), "978-0134685991");
+        library.returnBook(firstMember.getId(), "978-0134685991");
         System.out.println("\n== After Return ==");
         System.out.println(library.searchByTitle("Design"));
 
-        library.checkout(m1.getId(), "000-0000000000");
+        library.checkout(firstMember.getId(), "000-0000000000");
 
         System.out.println("\n== Top Borrowed Books ==");
         for (Book b : library.topBorrowed(3)) {
